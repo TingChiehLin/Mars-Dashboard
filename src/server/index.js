@@ -3,10 +3,15 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const fetch = require('node-fetch')
 const path = require('path')
+const cors = require("cors")
 
 const app = express()
 const port = 3000
 
+const { Map } = require('immutable');
+
+
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
@@ -15,7 +20,7 @@ app.use('/', express.static(path.join(__dirname, '../public')))
 // your API calls
 
 
-// example API call
+// Fetch Images Data
 app.get('/apod', async (req, res) => {
     try {
         let image = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${process.env.API_KEY}`)
@@ -26,4 +31,4 @@ app.get('/apod', async (req, res) => {
     }
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Listening on port ${port}!`))

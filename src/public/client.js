@@ -21,7 +21,6 @@ const App = (state) => {
     let { rovers, apod } = state
 
     return `
-        <header></header>
         <main>
             ${Greeting(store.user.name)}
             <section>
