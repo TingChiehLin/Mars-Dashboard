@@ -9,6 +9,10 @@ People might be curious about Mars so I decided to make this app that enables pe
 * CSS
 * API Call
 
+## API 
+
+[NASA Mars Photo API](https://github.com/chrisccerami/mars-photo-api)
+
 ## Get Started
 
 ```

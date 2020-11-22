@@ -6,22 +6,15 @@
   padding: 0;
 }
 
-.container {
-  /* display: grid;
-  grid-template-columns: 25% 75%; */
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
+.main-container {
+  display: grid;
+  grid-template-columns: 10% 90%; 
   min-height: 100vh;
-  width: 100%;
 }
 
 header {
-  position: fixed;
   color: white;
   background-color: #5A2116;
-  width: 250px;
-  height: 100%;
   padding: 3rem 2rem;
 }
 
@@ -50,17 +43,37 @@ header h1 {
   color: white;
 }
 
-main {
-  background-color: red;
+.foot-container {
+  width: 100%;
+  height: 50px;
+  background-color: #e7e7e7;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-footer {
-  /* footer styles */
+main {
+  padding: 3rem 3rem;
 }
 
 /* -------------------  TABLET  --------------------- */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   /* use mobile */
+  .main-container {
+    display: grid;
+    grid-template-columns: 25% 75%; 
+    min-height: 100vh;
+  }
+
+  header h1 {
+    font-size: 20px;
+  }
+  
+  .tab-container nav {
+    font-size: 17px;
+  }
+
 }
 
 /* -------------------  DESKTOP  -------------------- */
