@@ -128,4 +128,7 @@ const getRoverData = (name) => {
             'Content-Type': 'application/json'
         },
     })
+    .then(res => res.json())
+    .then(data => updateStore(store,{image}))
+    return data
 }
