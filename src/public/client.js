@@ -6,7 +6,7 @@ let store = {
 
 // add our markup to the page
 const root = document.getElementById('root')
-
+const information = document.getElementById('info');
 
 const updateStore = (store, newState) => {
     store = Object.assign(store, newState)
@@ -17,6 +17,10 @@ const render = async (root, state) => {
     root.innerHTML = App(state)
 }
 
+const renderInfo = async (name) => {
+    information.innerHTML = info(name);
+}
+
 // create content
 const App = (state) => {
     let { rovers } = state
@@ -24,14 +28,14 @@ const App = (state) => {
     return `
         <div class="main-container">
             <header class="header" id="header">
-                <h1>Mars Dashboard</h1>
+                <h2>Mars Dashboard</h2>
                 <div class="tab-container">
                     ${nav(rovers)}
                 </div>
             </header> 
             <main>
                 ${Greeting(store.user.name)}
-                ${Info(rovers[0])}
+                ${renderInfo(rovers[0])}
             </main>
         </div>
         ${footer()}
@@ -68,9 +72,9 @@ const Greeting = (name) => {
 const nav = (element) => {
     return `
     <nav>
-        <a href="" id="curiosity">${element[0]}</a>
-        <a href="" id="opportunity">${element[1]}</a>
-        <a href="" id="spirit">${element[2]}</a>
+        <a id="curiosity">${element[0]}</a>
+        <a id="opportunity">${element[1]}</a>
+        <a id="spirit">${element[2]}</a>
     </nav>
     `
 }
@@ -85,9 +89,13 @@ const footer = () => {
 
 const Info = (name) => {
     return `
-        <section class="">
-            <div></div>
-            <div></div>
+        <section class="information-container">
+            <div class="rover-container">
+            
+            </div>
+            <div class="recentInfo-containr">
+            
+            </div>
         </section>
     `
 }
@@ -144,3 +152,4 @@ const getRoverData = (name) => {
     .then(data => updateStore(store,{image}))
     return data
 }
+

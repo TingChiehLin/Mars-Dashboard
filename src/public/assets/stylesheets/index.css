@@ -8,7 +8,7 @@
 
 .main-container {
   display: grid;
-  grid-template-columns: 10% 90%; 
+  grid-template-columns: 15% 85%; 
   min-height: 100vh;
 }
 
@@ -18,7 +18,7 @@ header {
   padding: 3rem 2rem;
 }
 
-header h1 {
+header h2 {
   text-align: center;
 }
 
@@ -57,33 +57,59 @@ main {
   padding: 3rem 3rem;
 }
 
+/*
+  Section
+*/
+
+.information-container {
+  margin-top: 3rem;
+  background-color: #F7F7F7;
+  width: 100%;
+  height: 50rem;
+}
+
 /* -------------------  TABLET  --------------------- */
 @media (max-width: 768px) {
-  /* use mobile */
+
   .main-container {
-    display: grid;
     grid-template-columns: 25% 75%; 
-    min-height: 100vh;
   }
 
-  header h1 {
-    font-size: 20px;
+  /* use mobile */
+  header h2 {
+    font-size: 17px;
   }
   
   .tab-container nav {
-    font-size: 17px;
+    font-size: 14px;
   }
 
 }
 
 /* -------------------  DESKTOP  -------------------- */
 
-@media (min-width: 1224px) {
+@media (max-width: 1224px) {
+
+  .main-container {
+    grid-template-columns: 20% 80%; 
+  }
+
   /* use mobile */
+  header h2 {
+    font-size: 20px;
+  }
+  
+  .tab-container nav {
+    font-size: 17px;
+  }
 }
 
 /* -------------------  LARGE SCREENS  -------------- */
 
-@media (min-width: 1824px) {
+@media (max-width: 1824px) {
   /* use mobile */
+  .main-container {
+    grid-template-columns: 15% 85%; 
+  }
+
 }
