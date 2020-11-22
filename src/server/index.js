@@ -18,9 +18,9 @@ app.use('/', express.static(path.join(__dirname, '../public')))
 
 const API_KEY = process.env.API_KEY;
 
-app.post('./post', async (req,res) => {
+app.post('./info', async (req,res) => {
     try {
-
+        res.send();
     } catch (err) {
         console.log('error:', err);
     }

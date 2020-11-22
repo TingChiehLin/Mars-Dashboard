@@ -30,15 +30,9 @@ const App = (state) => {
             </header> 
             <main>
                 ${Greeting(store.user.name)}
-                <section>
-                    <p>
-                        One of the most popular websites at NASA is the Astronomy Picture of the Day. In fact, this website is one of
-                        the most popular websites across all federal agencies. It has the popular appeal of a Justin Bieber video.
-                        This endpoint structures the APOD imagery and associated metadata so that it can be repurposed for other
-                        applications. In addition, if the concept_tags parameter is set to True, then keywords derived from the image
-                        explanation are returned. These keywords could be used as auto-generated hashtags for twitter or instagram feeds;
-                        but generally help with discoverability of relevant imagery.
-                    </p>
+                <section class="">
+                    <div></div>
+                    <div></div>
                     ${ImageOfTheDay(apod)}
                 </section>
             </main>
@@ -114,6 +108,8 @@ const ImageOfTheDay = (apod) => {
     }
 }
 
+
+
 // ------------------------------------------------------  API CALLS
 
 // Example API call
@@ -123,4 +119,13 @@ const getImageOfTheDay = (state) => {
         .then(res => res.json())
         .then(apod => updateStore(store, { apod }))
     return data
+}
+
+const getRoverData = (name) => {
+    fetch(`http://localhost:3000/info`, {
+        method: `POST`,
+        header: {
+            'Content-Type': 'application/json'
+        },
+    })
 }
