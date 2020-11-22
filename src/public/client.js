@@ -7,6 +7,7 @@ let store = {
 // add our markup to the page
 const root = document.getElementById('root')
 
+
 const updateStore = (store, newState) => {
     store = Object.assign(store, newState)
     render(root, store)
@@ -18,30 +19,32 @@ const render = async (root, state) => {
 
 // create content
 const App = (state) => {
-    let { rovers, apod } = state
+    let { rovers } = state
 
     return `
         <div class="main-container">
             <header class="header" id="header">
                 <h1>Mars Dashboard</h1>
                 <div class="tab-container">
-                    ${nav(store.rovers)}
+                    ${nav(rovers)}
                 </div>
             </header> 
             <main>
                 ${Greeting(store.user.name)}
-                <section class="">
-                    <div></div>
-                    <div></div>
-                    ${ImageOfTheDay(apod)}
-                </section>
+                ${Info(rovers[0])}
             </main>
         </div>
         ${footer()}
     `
 }
 
-// ${Greeting(store.user.name)}
+//Launch Date
+// Landing Date
+// Status
+// Most recently available photos
+// Date the most recent photos were taken
+
+
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
     render(root, store)
@@ -77,6 +80,15 @@ const footer = () => {
         <footer class="foot-container">
             © Copyright 2020. Developed by Jay Lin
         </footer>
+    `
+}
+
+const Info = (name) => {
+    return `
+        <section class="">
+            <div></div>
+            <div></div>
+        </section>
     `
 }
 
