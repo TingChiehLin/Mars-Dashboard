@@ -85,7 +85,6 @@ const nav = () => {
     //     <a id="opportunity">${index[1]}</a>
     //     <a id="spirit">${index[2]}</a>
     // </nav>
-    
 }
 
 const footer = () => {
@@ -102,6 +101,7 @@ const Info = (name) => {
             <div class="rover-container">
                 <h1>Rover Name: ${name}</h1>
                 ${renderImage()}
+                ${getRoverData}}
             </div>
             <div class="recentInfo-containr">
 
