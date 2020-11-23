@@ -163,6 +163,9 @@ const getRoverData = (state) => {
         },
     })
     .then(res => res.json())
-    .then(data => updateStore(store, { image: data }))
+    .then(data => {
+        console.log(data)
+        updateStore(store, { image: data }
+    )})
 }
 
