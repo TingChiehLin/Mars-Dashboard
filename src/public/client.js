@@ -3,7 +3,7 @@ let store = {
     apod: '',
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
     image: [],
-    navIndex: 'curiosity'
+    navIndex: 'Curiosity'
 }
 
 // add our markup to the page
@@ -22,7 +22,7 @@ const render = async (root, state) => {
 
 // create content
 const App = (state) => {
-    let { rovers } = state
+    let { rovers, navIndex } = state
 
     return `
         <div class="main-container">
@@ -34,7 +34,7 @@ const App = (state) => {
             </header> 
             <main>
                 ${Greeting(store.user.name)}
-                ${Info(rovers)}
+                ${updateInfo(store, navIndex)}
             </main>
         </div>
         ${footer()}
@@ -61,13 +61,28 @@ const Greeting = (name) => {
     `
 }
 
+function changeIndex(e) {
+    console.log(e);
+    
+}
+
+// a.addEventListener('click',(e) => {
+    //     const currentid = e.target.id;
+    //     updateStore(store,{navIndex: id});
+    //     updateInfo(store, currentid);
+    //     if(a.id  === currentid) {
+    //         a.classList.add('active');
+    //     } else {
+    //         a.classList.remove('active');
+    //     }
+    // })
+
 const nav = () => {
     const navElement = ['Curiosity', 'Opportunity', 'Spirit'];
     const navigation_tags = navElement.map(index => {
-        const a = `<a id="${index}">${index}</a>`
-        a.addEventListener('click',() => {
-            
-        })
+        const a = `<a id="${index}" onclick=${(e) => {
+
+        }}> ${index} </a>`
         console.log(a);
         return a
     }).join(' ');
@@ -84,12 +99,12 @@ const footer = () => {
     `
 }
 
-const Info = (name) => {
+const updateInfo = (store, currentIndex) => {
     return `
         <section class="information-container">
             <div class="rover-container">
-                <h1>Rover Name: ${name}</h1>
-                ${roverInfo(name)}
+                <h1>Rover Name: ${currentIndex}</h1>
+                ${roverInfo(currentIndex)}
                 ${getRoverData(store)}}
             </div>
             <div class="recentInfo-container">
@@ -98,6 +113,11 @@ const Info = (name) => {
         </section>
     `
 }
+
+const roverInfo = (state, index) => {
+    console.log(state);
+    
+  }
 
 // Example of a pure function that renders infomation requested from the backend
 const ImageOfTheDay = (apod) => {
@@ -127,10 +147,6 @@ const ImageOfTheDay = (apod) => {
     }
 }
 
-const roverInfo = (state, index) => {
-  console.log(state);
-}
-
 // ------------------------------------------------------  API CALLS
 
 // Example API call
@@ -144,16 +160,15 @@ const getImageOfTheDay = (state) => {
 
 const getRoverData = (state) => {
     let { image } = state;
-    fetch(`http://localhost:3000/roverimage`, {
-        method: `GET`,
-        header: {
-            'Content-Type': 'application/json'
-        },
-    })
+    function handleError(err) {
+        console.log(err);
+    }
+    const endPoint = 'http://localhost:3000/roverimage';
+    fetch(endPoint)
     .then(res => res.json())
     .then(data => {
         console.log(data)
         updateStore(store, { image: data })
-    })
+    }).catch(handleError)
 }
 
