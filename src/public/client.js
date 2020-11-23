@@ -29,24 +29,17 @@ const App = (state) => {
             <header class="header" id="header">
                 <h2>Mars Dashboard</h2>
                 <div class="tab-container">
-                    ${nav(rovers)}
+                    ${nav()}
                 </div>
             </header> 
             <main>
                 ${Greeting(store.user.name)}
-                ${Info(rovers[0])}
+                ${Info(rovers)}
             </main>
         </div>
         ${footer()}
     `
 }
-
-//Launch Date
-// Landing Date
-// Status
-// Most recently available photos
-// Date the most recent photos were taken
-
 
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
@@ -68,28 +61,19 @@ const Greeting = (name) => {
     `
 }
 
-// const navElement = ['curiosity', 'opportunity', 'spirit'];
-
-// navElement.map((index) => {
-//     const navElement = document.createElement('a');
-//     navElement.setAttribute("id", `${index}`);
-//     navElement.addEventListener('click', async(e)=> {
-//         if(e.id === navIndex) {
-//             console.log("active");
-//         }
-//         await updateStore(store, { navIndex : navIndex });
-        
-//     });
-// }) 
-
-const nav = (index) => {
-    return `
-        <nav>
-            <a id="curiosity">${index[0]}</a>
-            <a id="opportunity">${index[1]}</a>
-            <a id="spirit">${index[2]}</a>
-        </nav>
-    `
+const nav = () => {
+    const navElement = ['Curiosity', 'Opportunity', 'Spirit'];
+    const navigation_tags = navElement.map(index => {
+        const a = `<a id="${index}">${index}</a>`
+        a.addEventListener('click',() => {
+            
+        })
+        console.log(a);
+        return a
+    }).join(' ');
+    return `<nav>
+                ${navigation_tags}
+            </nav>`;
 }
 
 const footer = () => {
@@ -105,10 +89,10 @@ const Info = (name) => {
         <section class="information-container">
             <div class="rover-container">
                 <h1>Rover Name: ${name}</h1>
-                ${renderImage()}
+                ${roverInfo(name)}
                 ${getRoverData(store)}}
             </div>
-            <div class="recentInfo-containr">
+            <div class="recentInfo-container">
 
             </div>
         </section>
@@ -143,13 +127,9 @@ const ImageOfTheDay = (apod) => {
     }
 }
 
-const renderImage = (state) => {
-
-    // return  (`
-    //     <img src="${state.url}" height="100%" width="100%" />
-    // `)
+const roverInfo = (state, index) => {
+  console.log(state);
 }
-
 
 // ------------------------------------------------------  API CALLS
 
