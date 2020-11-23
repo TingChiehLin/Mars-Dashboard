@@ -2,6 +2,7 @@ let store = {
     user: { name: "NASA MARS EXPLORATION" },
     apod: '',
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
+    image: []
 }
 
 // add our markup to the page
@@ -17,10 +18,6 @@ const render = async (root, state) => {
     root.innerHTML = App(state)
 }
 
-const renderInfo = async (name) => {
-    information.innerHTML = info(name);
-}
-
 // create content
 const App = (state) => {
     let { rovers } = state
@@ -30,12 +27,12 @@ const App = (state) => {
             <header class="header" id="header">
                 <h2>Mars Dashboard</h2>
                 <div class="tab-container">
-                    ${nav(rovers)}
+                    ${nav()}
                 </div>
             </header> 
             <main>
                 ${Greeting(store.user.name)}
-                ${renderInfo(rovers[0])}
+                ${Info(rovers[0])}
             </main>
         </div>
         ${footer()}
@@ -69,14 +66,26 @@ const Greeting = (name) => {
     `
 }
 
-const nav = (element) => {
-    return `
-    <nav>
-        <a id="curiosity">${element[0]}</a>
-        <a id="opportunity">${element[1]}</a>
-        <a id="spirit">${element[2]}</a>
-    </nav>
-    `
+const nav = () => {
+    const navElement = ['curiosity', 'opportunity', 'spirit'];
+    const navContainer = document.createElement('nav');
+
+    navElement.map((index) => {
+        const navElement = document.createElement('a');
+        navElement.setAttribute("id", `${index}`);
+        navElement.addEventListener('click', ()=> {
+            console.log('click');
+        });
+    }) 
+    //navContainer.appendChild();
+    return `${navContainer}`;
+
+    // <nav>
+    //     <a id="curiosity">${index[0]}</a>
+    //     <a id="opportunity">${index[1]}</a>
+    //     <a id="spirit">${index[2]}</a>
+    // </nav>
+    
 }
 
 const footer = () => {
@@ -91,10 +100,11 @@ const Info = (name) => {
     return `
         <section class="information-container">
             <div class="rover-container">
-            
+                <h1>Rover Name: ${name}</h1>
+                ${renderImage()}
             </div>
             <div class="recentInfo-containr">
-            
+
             </div>
         </section>
     `
@@ -128,6 +138,9 @@ const ImageOfTheDay = (apod) => {
     }
 }
 
+const renderImage = (state) => {
+    return state;
+}
 
 
 // ------------------------------------------------------  API CALLS
@@ -141,15 +154,15 @@ const getImageOfTheDay = (state) => {
     return data
 }
 
-const getRoverData = (name) => {
-    fetch(`http://localhost:3000/info`, {
-        method: `POST`,
+const getRoverData = (state) => {
+    let { image } = state;
+    fetch(`http://localhost:3000/roverimage`, {
+        method: `GET`,
         header: {
             'Content-Type': 'application/json'
         },
     })
     .then(res => res.json())
-    .then(data => updateStore(store,{image}))
-    return data
+    .then(data => updateStore(store, { image: data }))
 }
 
