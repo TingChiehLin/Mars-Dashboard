@@ -61,8 +61,8 @@ const Greeting = (name) => {
     `
 }
 
-function changeIndex(e) {
-    console.log(e);
+function changeIndex(index) {
+    console.log(index.target.id);
     
 }
 
@@ -80,9 +80,7 @@ function changeIndex(e) {
 const nav = () => {
     const navElement = ['Curiosity', 'Opportunity', 'Spirit'];
     const navigation_tags = navElement.map(index => {
-        const a = `<a id="${index}" onclick=${(e) => {
-
-        }}> ${index} </a>`
+        const a = `<a id="${index}" onclick='changeIndex(${index})'> ${index} </a>`
         console.log(a);
         return a
     }).join(' ');

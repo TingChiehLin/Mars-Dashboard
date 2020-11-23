@@ -76,7 +76,7 @@ main {
 @media (max-width: 768px) {
 
   .main-container {
-    grid-template-columns: 25% 75%; 
+    grid-template-columns: minmax(150px, 25%) 75%; 
   }
 
   /* use mobile */
