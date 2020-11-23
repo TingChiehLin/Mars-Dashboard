@@ -2,7 +2,8 @@ let store = {
     user: { name: "NASA MARS EXPLORATION" },
     apod: '',
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
-    image: []
+    image: [],
+    navIndex: 'curiosity'
 }
 
 // add our markup to the page
@@ -12,6 +13,7 @@ const information = document.getElementById('info');
 const updateStore = (store, newState) => {
     store = Object.assign(store, newState)
     render(root, store)
+
 }
 
 const render = async (root, state) => {
@@ -27,7 +29,7 @@ const App = (state) => {
             <header class="header" id="header">
                 <h2>Mars Dashboard</h2>
                 <div class="tab-container">
-                    ${nav()}
+                    ${nav(rovers)}
                 </div>
             </header> 
             <main>
@@ -66,25 +68,28 @@ const Greeting = (name) => {
     `
 }
 
-const nav = () => {
-    const navElement = ['curiosity', 'opportunity', 'spirit'];
-    const navContainer = document.createElement('nav');
+// const navElement = ['curiosity', 'opportunity', 'spirit'];
 
-    navElement.map((index) => {
-        const navElement = document.createElement('a');
-        navElement.setAttribute("id", `${index}`);
-        navElement.addEventListener('click', ()=> {
-            console.log('click');
-        });
-    }) 
-    //navContainer.appendChild();
-    return `${navContainer}`;
+// navElement.map((index) => {
+//     const navElement = document.createElement('a');
+//     navElement.setAttribute("id", `${index}`);
+//     navElement.addEventListener('click', async(e)=> {
+//         if(e.id === navIndex) {
+//             console.log("active");
+//         }
+//         await updateStore(store, { navIndex : navIndex });
+        
+//     });
+// }) 
 
-    // <nav>
-    //     <a id="curiosity">${index[0]}</a>
-    //     <a id="opportunity">${index[1]}</a>
-    //     <a id="spirit">${index[2]}</a>
-    // </nav>
+const nav = (index) => {
+    return `
+        <nav>
+            <a id="curiosity">${index[0]}</a>
+            <a id="opportunity">${index[1]}</a>
+            <a id="spirit">${index[2]}</a>
+        </nav>
+    `
 }
 
 const footer = () => {
@@ -101,7 +106,7 @@ const Info = (name) => {
             <div class="rover-container">
                 <h1>Rover Name: ${name}</h1>
                 ${renderImage()}
-                ${getRoverData}}
+                ${getRoverData(store)}}
             </div>
             <div class="recentInfo-containr">
 
@@ -139,7 +144,10 @@ const ImageOfTheDay = (apod) => {
 }
 
 const renderImage = (state) => {
-    return state;
+
+    // return  (`
+    //     <img src="${state.url}" height="100%" width="100%" />
+    // `)
 }
 
 
@@ -165,7 +173,7 @@ const getRoverData = (state) => {
     .then(res => res.json())
     .then(data => {
         console.log(data)
-        updateStore(store, { image: data }
-    )})
+        updateStore(store, { image: data })
+    })
 }
 
