@@ -60,11 +60,11 @@ const Greeting = (name) => {
 }
 
 function changeIndex(element, index) {
-    updateStore(store, {navIndex: index});
-    updateInfo(store, index);
     const activeNav = store.rovers.filter(e => e === element.id) ?
     element.classList.add('active') : element.classList.remove('active');
     console.log(activeNav);
+    updateStore(store, {navIndex: index});
+    updateInfo(store, element);
 }
 
 const nav = (rovers) => {
@@ -85,12 +85,12 @@ const footer = () => {
     `
 }
 
-const updateInfo = (state, navIndex) => {
+const updateInfo = (state, element) => {
     return `
         <section class="information-container">
             <div class="rover-container">
-                <h1>Rover Name: ${navIndex}</h1>
-                ${roverInfo(navIndex)}
+                <h1>Rover Name: ${element.id}</h1>
+                ${roverInfo(element.id)}
                 ${getRoverData(state)}}
             </div>
             <div class="recentInfo-container">
@@ -100,7 +100,7 @@ const updateInfo = (state, navIndex) => {
     `
 }
 
-const roverInfo = (state, index) => {
+const roverInfo = (state, element) => {
     //console.log(state);
 }
 
