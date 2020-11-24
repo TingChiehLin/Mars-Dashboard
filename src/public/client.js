@@ -60,9 +60,7 @@ const Greeting = (name) => {
 }
 
 function changeIndex(element, index) {
-    const activeNav = store.rovers.filter(e => e === element.id) ?
-    element.classList.add('active') : element.classList.remove('active');
-    console.log(activeNav);
+    store.rovers.find(e => e === element.id) ? element.classList.add('active') : element.classList.remove('active');
     updateStore(store, {navIndex: index});
     updateInfo(store, element);
 }
