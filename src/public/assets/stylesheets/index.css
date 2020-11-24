@@ -40,11 +40,11 @@ header h2 {
 }
 
 .tab-container nav a:hover {
-  color: white;
+  color:  rgb(255, 145, 19);
 }
 
 .tab-container nav a.active {
-  color: white;
+  color: rgb(255, 145, 19);
 }
 
 .foot-container {

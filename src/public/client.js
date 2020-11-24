@@ -59,18 +59,17 @@ const Greeting = (name) => {
     `
 }
 
-function changeIndex(element, index, rovers) {
+function changeIndex(element, index) {
     updateStore(store, {navIndex: index});
     updateInfo(store, index);
-    console.log(element);
-    console.log(index);
-    const activeNav = rovers.filter(e => e[index] === element.id) ?
-    activeNav.classList.add('active') : element.classList.remove('active');
+    const activeNav = store.rovers.filter(e => e === element.id) ?
+    element.classList.add('active') : element.classList.remove('active');
+    console.log(activeNav);
 }
 
 const nav = (rovers) => {
     const navigation_tags = rovers.map((element,index) => {
-        const a = `<a id="${element}" onclick=changeIndex(${element},${index},${rovers})> ${element} </a>`
+        const a = `<a id="${element}" onclick=changeIndex(${element},${index})> ${element} </a>`
         return a
     }).join(' ');
     return `<nav>
