@@ -30,11 +30,11 @@ app.post('./info', async (req,res) => {
     }
 })
 
+//let rover = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity?api_key=${API_KEY}`)
 // Fetch Image from NASA
 app.get('/roverimage', async (req, res) => {
-    try {
-        //let image = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity?api_key=${API_KEY}`)
-        let image = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000?api_key=${API_KEY}`)
+    try {        
+        let image = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=${API_KEY}`)
             .then(res => res.json())
         res.send({ image })
         console.log(image);

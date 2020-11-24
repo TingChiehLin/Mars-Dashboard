@@ -21,7 +21,7 @@ const render = async (root, state) => {
 
 // create content
 const App = (state) => {
-    let {user, rovers, navIndex } = state
+    let {user, rovers } = state
 
     return `
         <div class="main-container">
@@ -59,21 +59,18 @@ const Greeting = (name) => {
     `
 }
 
-function changeIndex(element, index) {
+function changeIndex(element, index, rovers) {
     updateStore(store, {navIndex: index});
     updateInfo(store, index);
     console.log(element);
-    // element.classList.add('active');
-    // if(element.id === index) {
-    //     element.classList.add('active');
-    // } else {
-    //     element.classList.remove('active');
-    // }
+    console.log(index);
+    const activeNav = rovers.filter(e => e[index] === element.id) ?
+    activeNav.classList.add('active') : element.classList.remove('active');
 }
 
 const nav = (rovers) => {
     const navigation_tags = rovers.map((element,index) => {
-        const a = `<a id="${element}" onclick=changeIndex(${rovers},${index})> ${element} </a>`
+        const a = `<a id="${element}" onclick=changeIndex(${element},${index},${rovers})> ${element} </a>`
         return a
     }).join(' ');
     return `<nav>
