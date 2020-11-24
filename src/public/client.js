@@ -13,7 +13,6 @@ const information = document.getElementById('info');
 const updateStore = (store, newState) => {
     store = Object.assign(store, newState)
     render(root, store)
-
 }
 
 const render = async (root, state) => {
@@ -22,25 +21,24 @@ const render = async (root, state) => {
 
 // create content
 const App = (state) => {
-    let { rovers, navIndex } = state
+    let {user, rovers, navIndex } = state
 
     return `
         <div class="main-container">
             <header class="header" id="header">
                 <h2>Mars Dashboard</h2>
                 <div class="tab-container">
-                    ${nav()}
+                    ${nav(rovers)}
                 </div>
             </header> 
             <main>
-                ${Greeting(store.user.name)}
-                ${updateInfo(store, rovers[navIndex])}
+                ${Greeting(user.name)}
             </main>
         </div>
         ${footer()}
     `
 }
-
+// / ${updateInfo(store, rovers[navIndex])}
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
     render(root, store)
@@ -61,10 +59,10 @@ const Greeting = (name) => {
     `
 }
 
-function changeIndex(rovers, index) {
+function changeIndex(element, index) {
     updateStore(store, {navIndex: index});
     updateInfo(store, index);
-    console.log(rovers[0]);
+    console.log(element);
     // element.classList.add('active');
     // if(element.id === index) {
     //     element.classList.add('active');
@@ -73,8 +71,7 @@ function changeIndex(rovers, index) {
     // }
 }
 
-const nav = () => {
-    let { rovers } = store
+const nav = (rovers) => {
     const navigation_tags = rovers.map((element,index) => {
         const a = `<a id="${element}" onclick=changeIndex(${rovers},${index})> ${element} </a>`
         return a
@@ -92,13 +89,13 @@ const footer = () => {
     `
 }
 
-const updateInfo = (store, navIndex) => {
+const updateInfo = (state, navIndex) => {
     return `
         <section class="information-container">
             <div class="rover-container">
                 <h1>Rover Name: ${navIndex}</h1>
                 ${roverInfo(navIndex)}
-                ${getRoverData(store)}}
+                ${getRoverData(state)}}
             </div>
             <div class="recentInfo-container">
 
