@@ -21,7 +21,7 @@ const render = async (root, state) => {
 
 // create content
 const App = (state) => {
-    let {user, rovers } = state
+    let {user, rovers, navIndex} = state
 
     return `
         <div class="main-container">
@@ -33,12 +33,13 @@ const App = (state) => {
             </header> 
             <main>
                 ${Greeting(user.name)}
+                ${roverInfo(rovers, navIndex)}
             </main>
         </div>
         ${footer()}
     `
 }
-// / ${updateInfo(store, rovers[navIndex])}
+
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
     render(root, store)
@@ -62,7 +63,7 @@ const Greeting = (name) => {
 function changeIndex(element, index) {
     store.rovers.find(e => e === element.id) ? element.classList.add('active') : element.classList.remove('active');
     updateStore(store, {navIndex: index});
-    updateInfo(store, element);
+    
 }
 
 const nav = (rovers) => {
@@ -83,13 +84,12 @@ const footer = () => {
     `
 }
 
-const updateInfo = (state, element) => {
+const roverInfo = (element, navIndex) => {
     return `
         <section class="information-container">
             <div class="rover-container">
-                <h1>Rover Name: ${element.id}</h1>
-                ${roverInfo(element.id)}
-                ${getRoverData(state)}}
+                <h1>Rover Name: ${element[navIndex]}</h1>
+
             </div>
             <div class="recentInfo-container">
 
@@ -98,9 +98,7 @@ const updateInfo = (state, element) => {
     `
 }
 
-const roverInfo = (state, element) => {
-    //console.log(state);
-}
+// getRoverData(state)
 
 // Example of a pure function that renders infomation requested from the backend
 const ImageOfTheDay = (apod) => {
