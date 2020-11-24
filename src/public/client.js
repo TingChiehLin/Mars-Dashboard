@@ -3,7 +3,7 @@ let store = {
     apod: '',
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
     image: [],
-    navIndex: 'Curiosity'
+    navIndex: 0
 }
 
 // add our markup to the page
@@ -34,7 +34,7 @@ const App = (state) => {
             </header> 
             <main>
                 ${Greeting(store.user.name)}
-                ${updateInfo(store, navIndex)}
+                ${updateInfo(store, rovers[navIndex])}
             </main>
         </div>
         ${footer()}
@@ -61,27 +61,22 @@ const Greeting = (name) => {
     `
 }
 
-function changeIndex(index) {
-    console.log(index);
-    
-
+function changeIndex(rovers, index) {
+    updateStore(store, {navIndex: index});
+    updateInfo(store, index);
+    console.log(rovers[0]);
+    // element.classList.add('active');
+    // if(element.id === index) {
+    //     element.classList.add('active');
+    // } else {
+    //     element.classList.remove('active');
+    // }
 }
 
-// a.addEventListener('click',(e) => {
-    //     const currentid = e.target.id;
-    //     updateStore(store,{navIndex: id});
-    //     updateInfo(store, currentid);
-    //     if(a.id  === currentid) {
-    //         a.classList.add('active');
-    //     } else {
-    //         a.classList.remove('active');
-    //     }
-    // })
-
 const nav = () => {
-    const navElement = ['Curiosity', 'Opportunity', 'Spirit'];
-    const navigation_tags = navElement.map((element,index) => {
-        const a = `<a id="${element}" onclick=changeIndex(${index})> ${element} </a>`
+    let { rovers } = store
+    const navigation_tags = rovers.map((element,index) => {
+        const a = `<a id="${element}" onclick=changeIndex(${rovers},${index})> ${element} </a>`
         return a
     }).join(' ');
     return `<nav>
