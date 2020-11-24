@@ -62,8 +62,9 @@ const Greeting = (name) => {
 }
 
 function changeIndex(index) {
-    console.log(index.target.id);
+    console.log(index);
     
+
 }
 
 // a.addEventListener('click',(e) => {
@@ -79,9 +80,8 @@ function changeIndex(index) {
 
 const nav = () => {
     const navElement = ['Curiosity', 'Opportunity', 'Spirit'];
-    const navigation_tags = navElement.map(index => {
-        const a = `<a id="${index}" onclick='changeIndex(${index})'> ${index} </a>`
-        console.log(a);
+    const navigation_tags = navElement.map((element,index) => {
+        const a = `<a id="${element}" onclick=changeIndex(${index})> ${element} </a>`
         return a
     }).join(' ');
     return `<nav>
@@ -97,12 +97,12 @@ const footer = () => {
     `
 }
 
-const updateInfo = (store, currentIndex) => {
+const updateInfo = (store, navIndex) => {
     return `
         <section class="information-container">
             <div class="rover-container">
-                <h1>Rover Name: ${currentIndex}</h1>
-                ${roverInfo(currentIndex)}
+                <h1>Rover Name: ${navIndex}</h1>
+                ${roverInfo(navIndex)}
                 ${getRoverData(store)}}
             </div>
             <div class="recentInfo-container">
@@ -113,9 +113,8 @@ const updateInfo = (store, currentIndex) => {
 }
 
 const roverInfo = (state, index) => {
-    console.log(state);
-    
-  }
+    //console.log(state);
+}
 
 // Example of a pure function that renders infomation requested from the backend
 const ImageOfTheDay = (apod) => {
