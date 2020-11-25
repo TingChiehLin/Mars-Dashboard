@@ -152,8 +152,6 @@ const getRoverData = (apod) => {
 
     }
 
-
-
     function handleError(err) {
         console.log(err);
     }
