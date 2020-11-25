@@ -34,6 +34,7 @@ const App = (state) => {
             <main>
                 ${Greeting(user.name)}
                 ${console.log(navIndex)}
+                ${roverInfo(rovers, navIndex)}
             </main>
         </div>
         ${footer()}
