@@ -51,7 +51,7 @@ window.addEventListener('load', () => {
 const Greeting = (name) => {
     if (name) {
         return `
-            <h1>${name} PROGRAM</h1>
+            <h1 class="center">${name} PROGRAM</h1>
         `
     }
 
@@ -61,14 +61,24 @@ const Greeting = (name) => {
 }
 
 function changeIndex(element, index) {
-    store.rovers.find(e => e === element.id) ? element.classList.add('active') : element.classList.remove('active');
+
+    store.rovers.find((e) => {
+        if(e === element.id) {
+            element.classList.add('active');
+            console.log(`e:${e}`);
+            console.log(`element id:${element.id}`);
+            console.log(element);
+        } else {
+            element.classList.remove('active');
+        }
+    }) 
+
     updateStore(store, {navIndex: index});
-    
 }
 
 const nav = (rovers) => {
     const navigation_tags = rovers.map((element,index) => {
-        const a = `<a id="${element}" onclick=changeIndex(${element},${index})> ${element} </a>`
+        const a = `<a id="${element}" onclick='changeIndex(${element},${index})'> ${element} </a>`
         return a
     }).join(' ');
     return `<nav>
@@ -88,8 +98,8 @@ const roverInfo = (element, navIndex) => {
     return `
         <section class="information-container">
             <div class="rover-container">
-                <h1>Rover Name: ${element[navIndex]}</h1>
-
+                <h1 class="title">Rover Name: ${element[navIndex]}</h1>
+                
             </div>
             <div class="recentInfo-container">
 
@@ -138,6 +148,8 @@ const getImageOfTheDay = (state) => {
         .then(apod => updateStore(store, { apod }))
     return data
 }
+
+
 
 const getRoverData = (state) => {
     let { image } = state;
