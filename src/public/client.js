@@ -33,13 +33,13 @@ const App = (state) => {
             </header> 
             <main>
                 ${Greeting(user.name)}
-                ${roverInfo(rovers, navIndex)}
+                ${console.log(navIndex)}
             </main>
         </div>
         ${footer()}
     `
 }
-
+//    ${roverInfo(rovers, navIndex)}
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
     render(root, store)
@@ -61,24 +61,21 @@ const Greeting = (name) => {
 }
 
 function changeIndex(element, index) {
-
-    store.rovers.find((e) => {
-        if(e === element.id) {
-            element.classList.add('active');
-            console.log(`e:${e}`);
-            console.log(`element id:${element.id}`);
-            console.log(element);
+    const navItems = document.getElementsByClassName("nav-item");
+    console.log(navItems);
+    for(let i = 0; i < navItems.length; i++) {
+        if(navItems[i] === element) {
+            navItems[i].classList.add('active');
         } else {
-            element.classList.remove('active');
+            navItems[i].classList.remove('active');
         }
-    }) 
-
+    }
     updateStore(store, {navIndex: index});
 }
 
 const nav = (rovers) => {
     const navigation_tags = rovers.map((element,index) => {
-        const a = `<a id="${element}" onclick='changeIndex(${element},${index})'> ${element} </a>`
+        const a = `<a id="${element}" class="nav-item" onclick='changeIndex(${element},${index})'> ${element} </a>`
         return a
     }).join(' ');
     return `<nav>
@@ -99,7 +96,7 @@ const roverInfo = (element, navIndex) => {
         <section class="information-container">
             <div class="rover-container">
                 <h1 class="title">Rover Name: ${element[navIndex]}</h1>
-                
+                ${getRoverData(element[navIndex])}
             </div>
             <div class="recentInfo-container">
 
@@ -149,19 +146,23 @@ const getImageOfTheDay = (state) => {
     return data
 }
 
+const getRoverData = (apod) => {
+
+    if(apod === 'xx') {
+
+    }
 
 
-const getRoverData = (state) => {
-    let { image } = state;
+
     function handleError(err) {
         console.log(err);
     }
     const endPoint = 'http://localhost:3000/roverimage';
-    fetch(endPoint)
-    .then(res => res.json())
-    .then(data => {
-        console.log(data)
-        updateStore(store, { image: data })
-    }).catch(handleError)
+        fetch(endPoint)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                updateStore(store, { image: data })
+        }).catch(handleError)
 }
 
