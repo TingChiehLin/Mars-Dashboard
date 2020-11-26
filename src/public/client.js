@@ -93,8 +93,9 @@ const footer = () => {
 const roverInfo = (element, navIndex) => {
     return `
         <section class="information-container">
+            <h1 class="title">Rover Name: ${element[navIndex]}</h1>
             <div class="rover-container">
-                ${getRoverData(element[navIndex])}
+                ${getRoverData()}
             </div>
             <div class="recentInfo-container">
                 ${getRecentlyImage()}
@@ -107,8 +108,9 @@ const roverInfo = (element, navIndex) => {
 const getRoverData = (apod) => {
 
     return (
-        `<h1 class="title">Rover Name: ${apod}</h1>
+        `
          <div>
+
          </div>
     
         `
@@ -118,7 +120,7 @@ const getRoverData = (apod) => {
 const getRecentlyImage = async () => {
     const data = await getRoverImage(store);
     console.log(data);
-    
+
     return (
         `
             <img src=${"data[0].img_src"} alt="image"/>
