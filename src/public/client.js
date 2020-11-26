@@ -39,7 +39,7 @@ const App = (state) => {
         ${footer()}
     `
 }
-//    ${roverInfo(rovers, navIndex)}
+//${roverInfo(rovers, navIndex)}
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
     render(root, store)
@@ -97,37 +97,47 @@ const roverInfo = (element, navIndex) => {
             <div class="rover-container">
                 ${getRoverData()}
             </div>
-            <div class="recentInfo-container">
+            <h1 class="title">Most recently available photos</h1>
+            <div class="recentPhoto-container">
                 ${getRecentlyImage()}
             </div>
         </section>
     `
 }
-
+// ${getRoverData()}
+// ${getRecentlyImage()}
 // /  ${getRoverImage(element[navIndex])}
+
 const getRoverData = (apod) => {
 
     return (
         `
-         <div>
+        <div class="intro-rover-image">
 
-         </div>
-    
+        </div>
+        <div class="intro-rover-container">
+            <div>Launch Date: </div>
+            <div>Landing Date: </div> 
+            <div>Status: </div>
+        </div>
         `
     )
 }
 
-const getRecentlyImage = async () => {
-    const data = await getRoverImage(store);
+const getRecentlyImage =  () => {
+    const data =  getRoverImage(store);
     console.log(data);
-
+    //data[0].img_src
     return (
-        `
-            <img src=${"data[0].img_src"} alt="image"/>
+        `<div>
+        
+            <img src=${""} alt="image"/>
+            <div>Earth-Date: </div>
+         </div>
         `
     )
 }
-
+//earth_date
 // Example of a pure function that renders infomation requested from the backend
 const ImageOfTheDay = (apod) => {
 
@@ -181,6 +191,7 @@ const getRoverImage = (state) => {
         .then(res => res.json())
         .then(data => {
             updateStore(store, { image: data })
+            console.log(data);
             console.log(data.image.photos);
             return data.image.photos;
     }).catch(handleError)

@@ -80,7 +80,20 @@ main {
 }
 
 .rover-container {
-  
+    display: flex;
+
+}
+
+.intro-rover-image {
+
+}
+
+.intro-rover-container {
+
+}
+
+.recentPhoto-container {
+    display: flex;
 }
 
 .title {
