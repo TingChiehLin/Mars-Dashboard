@@ -33,7 +33,6 @@ const App = (state) => {
             </header> 
             <main>
                 ${Greeting(user.name)}
-                ${console.log(navIndex)}
                 ${roverInfo(rovers, navIndex)}
             </main>
         </div>
@@ -63,7 +62,6 @@ const Greeting = (name) => {
 
 function changeIndex(element, index) {
     const navItems = document.getElementsByClassName("nav-item");
-    console.log(navItems);
     for(let i = 0; i < navItems.length; i++) {
         if(navItems[i] === element) {
             navItems[i].classList.add('active');
@@ -96,17 +94,37 @@ const roverInfo = (element, navIndex) => {
     return `
         <section class="information-container">
             <div class="rover-container">
-                <h1 class="title">Rover Name: ${element[navIndex]}</h1>
                 ${getRoverData(element[navIndex])}
             </div>
             <div class="recentInfo-container">
-
+                ${getRecentlyImage()}
             </div>
         </section>
     `
 }
 
-// getRoverData(state)
+// /  ${getRoverImage(element[navIndex])}
+const getRoverData = (apod) => {
+
+    return (
+        `<h1 class="title">Rover Name: ${apod}</h1>
+         <div>
+         </div>
+    
+        `
+    )
+}
+
+const getRecentlyImage = async () => {
+    const data = await getRoverImage(store);
+    console.log(data);
+    
+    return (
+        `
+            <img src=${"data[0].img_src"} alt="image"/>
+        `
+    )
+}
 
 // Example of a pure function that renders infomation requested from the backend
 const ImageOfTheDay = (apod) => {
@@ -147,21 +165,42 @@ const getImageOfTheDay = (state) => {
     return data
 }
 
-const getRoverData = (apod) => {
-
-    if(apod === 'xx') {
-
-    }
+const getRoverImage = (state) => {
+    let { image } = state;
 
     function handleError(err) {
         console.log(err);
     }
     const endPoint = 'http://localhost:3000/roverimage';
-        fetch(endPoint)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                updateStore(store, { image: data })
-        }).catch(handleError)
+
+    fetch(endPoint, {
+        method: 'GET'
+    })
+        .then(res => res.json())
+        .then(data => {
+            updateStore(store, { image: data })
+            console.log(data.image.photos);
+            return data.image.photos;
+    }).catch(handleError)
 }
 
+const postRover = () => {
+    const robot = req.body.robot;
+    const content = req.body.content;
+    const endPoint = 'http://localhost:3000/info';
+    fetch(endPoint, {
+        method: 'POST',
+        body: JSON.stringify({
+            robot: 'A Rover Post',
+            content: 'Curiosity'
+        }),
+        header: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(res => res.status(201).json())
+        .then(data => {
+            // message: "Post Test",
+            // post: data
+    });
+}
