@@ -95,11 +95,11 @@ const roverInfo = (element, navIndex) => {
         <section class="information-container">
             <h1 class="title">Rover Name: ${element[navIndex]}</h1>
             <div class="rover-container">
-                ${getRoverData()}
+                ${getRoverData(element[navIndex])}
             </div>
             <h1 class="title">Most recently available photos</h1>
             <div class="recentPhoto-container">
-                ${getRecentlyImage()}
+                ${getRecentlyImage(element[navIndex])}
             </div>
         </section>
     `
@@ -124,8 +124,8 @@ const getRoverData = (apod) => {
     )
 }
 
-const getRecentlyImage =  () => {
-    const data =  getRoverImage(store);
+const getRecentlyImage =  (apod) => {
+    const data =  getRoverImage(store, apod);
     console.log(data);
     //data[0].img_src
     return (
@@ -177,13 +177,13 @@ const getImageOfTheDay = (state) => {
     return data
 }
 
-const getRoverImage = (state) => {
+const getRoverImage = (state, apod) => {
     let { image } = state;
 
     function handleError(err) {
         console.log(err);
     }
-    const endPoint = 'http://localhost:3000/roverimage';
+    const endPoint = `http://localhost:3000/roverimage/${apod.toLowerCase()}`;
 
     fetch(endPoint, {
         method: 'GET'

@@ -81,15 +81,25 @@ main {
 
 .rover-container {
     display: flex;
-
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap:5rem;
+    margin: 3rem 3rem;
 }
 
 .intro-rover-image {
-
+  width: 800px;
+  height: 500px;
+  border-radius: 5%;
+  background-color: brown;
 }
 
 .intro-rover-container {
 
+  font-size: 17px;
+  width: 100%;
+  height: 100%;
+  background-color: brown;
 }
 
 .recentPhoto-container {
