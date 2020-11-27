@@ -31,15 +31,20 @@ app.post('./info', async (req,res) => {
     }
 })
 
+app.get('/', (req, res) => {
+    res.send('Hello World');
+})
+
+
 // Fetch Image from NASA
-app.get(`/roverimage/${apod}`, async (req, res) => {
+app.get('/roverimage/:apod', async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin','*');
     res.setHeader('Access-Control-Allow-Method', 'GET, POST, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-header', 'Content-Type, Authorization');
     next();
-//res.body.rover
+
     try {        
-        let data = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/${apod}/photos?sol=1000&api_key=${API_KEY}`)
+        let data = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=${API_KEY}`)
             .then(res => res.json())
             res.send(data.photos)
             console.log(res.body.rover);

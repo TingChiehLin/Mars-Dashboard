@@ -28,7 +28,7 @@ const App = (state) => {
             <header class="header" id="header">
                 <h2>Mars Dashboard</h2>
                 <div class="tab-container">
-                    ${nav(rovers)}
+                    ${nav(rovers, navIndex)}
                 </div>
             </header> 
             <main>
@@ -61,6 +61,7 @@ const Greeting = (name) => {
 }
 
 function changeIndex(element, index) {
+    //const navActiveItem = document.getElementsByClassName(`nav-item-${index}`);
     const navItems = document.getElementsByClassName("nav-item");
     for(let i = 0; i < navItems.length; i++) {
         if(navItems[i] === element) {
@@ -69,12 +70,14 @@ function changeIndex(element, index) {
             navItems[i].classList.remove('active');
         }
     }
-    updateStore(store, {navIndex: index});
+    //Problem here
+   updateStore(store, {navIndex: index});
 }
 
-const nav = (rovers) => {
-    const navigation_tags = rovers.map((element,index) => {
-        const a = `<a id="${element}" class="nav-item" onclick='changeIndex(${element},${index})'> ${element} </a>`
+const nav = (rovers, navIndex) => {
+
+    const navigation_tags = rovers.map((element, index) => {
+        const a = `<a id="${element}" class="nav-item-${navIndex}" onclick='changeIndex(${element},${index})'> ${element} </a>`
         return a
     }).join(' ');
     return `<nav>
@@ -184,7 +187,6 @@ const getRoverImage = (state, apod) => {
         console.log(err);
     }
     const endPoint = `http://localhost:3000/roverimage/${apod.toLowerCase()}`;
-
     fetch(endPoint, {
         method: 'GET'
     })
