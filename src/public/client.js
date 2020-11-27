@@ -2,8 +2,9 @@ let store = {
     user: { name: "NASA MARS EXPLORATION" },
     apod: '',
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
-    image: [],
-    navIndex: 0
+    navIndex: 0,
+    roverInfo: {},
+    roverImage: []
 }
 
 // add our markup to the page
@@ -61,7 +62,6 @@ const Greeting = (name) => {
 }
 
 function changeIndex(element, index) {
-    //const navActiveItem = document.getElementsByClassName(`nav-item-${index}`);
     const navItems = document.getElementsByClassName("nav-item");
     for(let i = 0; i < navItems.length; i++) {
         if(navItems[i] === element) {
@@ -70,7 +70,6 @@ function changeIndex(element, index) {
             navItems[i].classList.remove('active');
         }
     }
-    //Problem here
    updateStore(store, {navIndex: index});
 }
 
@@ -109,7 +108,6 @@ const roverInfo = (element, navIndex) => {
 }
 
 const getRoverData = (apod) => {
-
     return (
         `
         <div class="intro-rover-image">
@@ -125,6 +123,7 @@ const getRoverData = (apod) => {
 }
 
 const getRecentlyImage =  (apod) => {
+    const data = getRoverImage(store, apod);
     return (
         `<div>
         
@@ -175,21 +174,21 @@ const getImageOfTheDay = (state) => {
     return data
 }
 
-const getRoverImage = (state, rover) => {
-    let { image } = state;
+const getRoverImage = (store , rover) => {
+    let { roverImage } = store;
 
     function handleError(err) {
         console.log(err);
     }
+
     const endPoint = `http://localhost:3000/roverimage/${rover.toLowerCase()}`;
     fetch(endPoint, {
         method: 'GET'
     })
         .then(res => res.json())
         .then(data => {
-            updateStore(store, { image: data })
             console.log(data);
-            return data;
+            updateStore(store, { roverImage: data })
     }).catch(handleError)
 }
 
