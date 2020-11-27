@@ -74,12 +74,12 @@ function changeIndex(element, index) {
    updateStore(store, {navIndex: index});
 }
 
-const nav = (rovers, navIndex) => {
-
-    const navigation_tags = rovers.map((element, index) => {
-        const a = `<a id="${element}" class="nav-item-${navIndex}" onclick='changeIndex(${element},${index})'> ${element} </a>`
+const nav = (rovers) => {
+    const navigation_tags = rovers.map((element,index) => {
+        const a = `<a id="${element}" class="nav-item ${index === store.navIndex ? "active" : ""}" onclick='changeIndex(${element},${index})'> ${element} </a>`
         return a
     }).join(' ');
+
     return `<nav>
                 ${navigation_tags}
             </nav>`;
@@ -107,9 +107,6 @@ const roverInfo = (element, navIndex) => {
         </section>
     `
 }
-// ${getRoverData()}
-// ${getRecentlyImage()}
-// /  ${getRoverImage(element[navIndex])}
 
 const getRoverData = (apod) => {
 
@@ -128,9 +125,6 @@ const getRoverData = (apod) => {
 }
 
 const getRecentlyImage =  (apod) => {
-    const data =  getRoverImage(store, apod);
-    console.log(data);
-    //data[0].img_src
     return (
         `<div>
         
@@ -140,6 +134,7 @@ const getRecentlyImage =  (apod) => {
         `
     )
 }
+
 //earth_date
 // Example of a pure function that renders infomation requested from the backend
 const ImageOfTheDay = (apod) => {
@@ -180,13 +175,13 @@ const getImageOfTheDay = (state) => {
     return data
 }
 
-const getRoverImage = (state, apod) => {
+const getRoverImage = (state, rover) => {
     let { image } = state;
 
     function handleError(err) {
         console.log(err);
     }
-    const endPoint = `http://localhost:3000/roverimage/${apod.toLowerCase()}`;
+    const endPoint = `http://localhost:3000/roverimage/${rover.toLowerCase()}`;
     fetch(endPoint, {
         method: 'GET'
     })
@@ -194,8 +189,7 @@ const getRoverImage = (state, apod) => {
         .then(data => {
             updateStore(store, { image: data })
             console.log(data);
-            console.log(data.image.photos);
-            return data.image.photos;
+            return data;
     }).catch(handleError)
 }
 
