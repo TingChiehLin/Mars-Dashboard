@@ -107,6 +107,7 @@ const renderRoverInfo = (element, navIndex, roverInfo) => {
 }
 
 const getRoverData = (state) => {
+
     return (
         `
         <div class="intro-rover-image">
@@ -124,15 +125,15 @@ const getRoverData = (state) => {
 const getRecentlyImage = (state) => {
     console.log(state);
     let content = ``;
-
-    
-    return (
-        `<div>
-            <img class="renderImage" src=${''} alt="image"/>
-            <div>Earth-Date: </div>
-         </div>
+    state.slice(0,2).map(element => {
+        console.log(element.img_src);
+        content += `<div>
+                <img class="renderImage" src=${element.img_src} alt="image"/>
+                <div>Earth-Date: ${element.earth_date}</div>
+            </div>
         `
-    )
+    })
+    return console;
 }
 
 //earth_date
