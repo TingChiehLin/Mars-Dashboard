@@ -15,6 +15,10 @@ const updateStore = (store, newState) => {
     render(root, store)
 }
 
+const updateIndex = (store, newState) => {
+    store = Object.assign(store, newState)
+}
+
 const render = async (root, state) => {
     root.innerHTML = App(state)
 }
@@ -41,7 +45,8 @@ const App = (state) => {
 //${roverInfo(rovers, navIndex)}
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
-    render(root, store)
+    getRoverImage(store, store.rovers[0]);
+    render(root, store);
 })
 
 // ------------------------------------------------------  COMPONENTS
@@ -68,8 +73,9 @@ function changeIndex(element, index) {
             navItems[i].classList.remove('active');
         }
     }
-    //Fetch Data
+
    getRoverImage(store, store.rovers[index]);
+   updateIndex(store, {navIndex: index});
 }
 
 const nav = (rovers) => {
@@ -96,7 +102,7 @@ const renderRoverInfo = (element, navIndex, roverInfo) => {
         <section class="information-container">
             <h1 class="title">Rover Name: ${element[navIndex]}</h1>
             <div class="rover-container">
-                ${getRoverData(roverInfo)}
+                ${getRoverData(roverInfo, navIndex)}
             </div>
             <h1 class="title">Most recently available photos</h1>
             <div class="recentPhoto-container">
@@ -106,34 +112,30 @@ const renderRoverInfo = (element, navIndex, roverInfo) => {
     `
 }
 
-const getRoverData = (state) => {
-
+const getRoverData = (state, navIndex) => {
     return (
         `
-        <div class="intro-rover-image">
-            
-        </div>
+        <img src="./assets/image/${store.rovers[navIndex] + ".jpg"}" alt="" class="intro-rover-image"/>
         <div class="intro-rover-container">
-            <div>Launch Date: </div>
-            <div>Landing Date: </div> 
-            <div>Status: </div>
+            <div>Launch Date: ${state[0].rover.launch_date} </div>
+            <div>Landing Date: ${state[0].rover.landing_date}</div> 
+            <div>Status: ${state[0].rover.status}</div>
         </div>
         `
     )
 }
 
 const getRecentlyImage = (state) => {
-    console.log(state);
+    
     let content = ``;
     state.slice(0,2).map(element => {
-        console.log(element.img_src);
         content += `<div>
                 <img class="renderImage" src=${element.img_src} alt="image"/>
-                <div>Earth-Date: ${element.earth_date}</div>
+                <div class="introImage-text">Earth-Date: ${element.earth_date}</div>
             </div>
         `
     })
-    return console;
+    return content;
 }
 
 //earth_date

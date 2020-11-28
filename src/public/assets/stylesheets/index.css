@@ -95,19 +95,26 @@ main {
 }
 
 .intro-rover-container {
-
   font-size: 17px;
   width: 100%;
   height: 100%;
-  background-color: brown;
+}
+
+.intro-rover-container > * {
+  margin-bottom:1rem;
 }
 
 .recentPhoto-container {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     gap: 3rem;
     padding:2rem 2rem;
+}
+
+.introImage-text {
+  margin-top: 1rem;
+  text-align: center;
 }
 
 .renderImage {
