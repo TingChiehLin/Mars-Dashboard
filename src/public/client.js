@@ -3,8 +3,7 @@ let store = {
     apod: '',
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
     navIndex: 0,
-    roverInfo: {},
-    roverImage: []
+    roverInfo: []
 }
 
 // add our markup to the page
@@ -22,19 +21,18 @@ const render = async (root, state) => {
 
 // create content
 const App = (state) => {
-    let {user, rovers, navIndex} = state
-
+    let {user, rovers, navIndex, roverInfo} = state
     return `
         <div class="main-container">
             <header class="header" id="header">
                 <h2>Mars Dashboard</h2>
                 <div class="tab-container">
-                    ${nav(rovers, navIndex)}
+                    ${nav(rovers)}
                 </div>
             </header> 
             <main>
                 ${Greeting(user.name)}
-                ${roverInfo(rovers, navIndex)}
+                ${renderRoverInfo(rovers, navIndex, roverInfo)}
             </main>
         </div>
         ${footer()}
@@ -70,7 +68,8 @@ function changeIndex(element, index) {
             navItems[i].classList.remove('active');
         }
     }
-   updateStore(store, {navIndex: index});
+    //Fetch Data
+   getRoverImage(store, store.rovers[index]);
 }
 
 const nav = (rovers) => {
@@ -92,26 +91,26 @@ const footer = () => {
     `
 }
 
-const roverInfo = (element, navIndex) => {
+const renderRoverInfo = (element, navIndex, roverInfo) => {
     return `
         <section class="information-container">
             <h1 class="title">Rover Name: ${element[navIndex]}</h1>
             <div class="rover-container">
-                ${getRoverData(element[navIndex])}
+                ${getRoverData(roverInfo)}
             </div>
             <h1 class="title">Most recently available photos</h1>
             <div class="recentPhoto-container">
-                ${getRecentlyImage(element[navIndex])}
+              ${getRecentlyImage(roverInfo)}
             </div>
         </section>
     `
 }
 
-const getRoverData = (apod) => {
+const getRoverData = (state) => {
     return (
         `
         <div class="intro-rover-image">
-
+            
         </div>
         <div class="intro-rover-container">
             <div>Launch Date: </div>
@@ -122,12 +121,14 @@ const getRoverData = (apod) => {
     )
 }
 
-const getRecentlyImage =  (apod) => {
-    const data = getRoverImage(store, apod);
+const getRecentlyImage = (state) => {
+    console.log(state);
+    let content = ``;
+
+    
     return (
         `<div>
-        
-            <img src=${""} alt="image"/>
+            <img class="renderImage" src=${''} alt="image"/>
             <div>Earth-Date: </div>
          </div>
         `
@@ -175,7 +176,6 @@ const getImageOfTheDay = (state) => {
 }
 
 const getRoverImage = (store , rover) => {
-    let { roverImage } = store;
 
     function handleError(err) {
         console.log(err);
@@ -188,7 +188,7 @@ const getRoverImage = (store , rover) => {
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            updateStore(store, { roverImage: data })
+            updateStore(store, { roverInfo: data })
     }).catch(handleError)
 }
 
