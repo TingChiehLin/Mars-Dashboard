@@ -19,19 +19,18 @@ const updateIndex = (store, newState) => {
 }
 
 const render = async (root, state) => {
-    console.log(state);
-    root.innerHTML = App(state)
+    root.innerHTML = App(state, renderRoverData, renderRecentlyImage)
 }
 
-// create content
-const App = (state) => {
+// App high order function
+const App = (state, renderRoverData, renderRecentlyImage) => {
+
     //Performance issue
     // let {user, rovers, navIndex, roverInfo} = state.toJS();
     let user = state.get('user')
     let rovers = state.get('rovers')
     let navIndex = state.get('navIndex')
     let roverInfo = state.get('roverInfo')
-    console.log(roverInfo);
 
     return `
         <div class="main-container">
@@ -43,17 +42,16 @@ const App = (state) => {
             </header> 
             <main>
                 ${Greeting(user.name)}
-                ${renderRoverInfo(rovers, navIndex, roverInfo)}
+                ${renderRoverInfo(rovers, navIndex, roverInfo, renderRoverData, renderRecentlyImage)}
             </main>
         </div>
         ${footer()}
     `
 }
-//${roverInfo(rovers, navIndex)}
+
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
-
-    getRoverImage(store, store.get('rovers')[0]);
+    getRoverImageData(store, store.get('rovers')[0]);
     // render(root, store);
 })
 
@@ -82,7 +80,7 @@ function changeIndex(element, index) {
         }
     }
     updateIndex(store, {navIndex: index});
-    getRoverImage(store, store.rovers[index]);
+    getRoverImageData(store, store.rovers[index]);
 }
 
 const nav = (rovers) => {
@@ -104,23 +102,26 @@ const footer = () => {
     `
 }
 
-const renderRoverInfo = (element, navIndex, roverInfo) => {
+const renderRoverInfo = (element, navIndex, roverInfo, renderRoverData, renderRecentlyImage) => {
+    const roverHTML = renderRoverData(roverInfo, navIndex);
+    const roverimageHTML = renderRecentlyImage(roverInfo);
     return `
         <section class="information-container">
             <h1 class="title">Rover Name: ${element[navIndex]}</h1>
             <div class="rover-container">
-                ${getRoverData(roverInfo, navIndex)}
+                ${roverHTML}
             </div>
             <h1 class="title">Most recently available photos</h1>
             <div class="recentPhoto-container">
-              ${getRecentlyImage(roverInfo)}
+                ${roverimageHTML}
             </div>
         </section>
     `
 }
 
-const getRoverData = (roverInfo, navIndex) => {
-    // console.log(roverInfo);
+const renderRoverData = (roverInfo, navIndex) => {
+    console.log(roverInfo);
+    console.log(roverInfo.get('id'));
     return (
         `
         <img src="./assets/image/${roverInfo[navIndex] + ".jpg"}" alt="" class="intro-rover-image"/>
@@ -133,7 +134,7 @@ const getRoverData = (roverInfo, navIndex) => {
     )
 }
 
-const getRecentlyImage = (state) => {
+const renderRecentlyImage = (state) => {
     
     let content = ``;
     state.slice(0,2).map(element => {
@@ -146,18 +147,20 @@ const getRecentlyImage = (state) => {
     return content;
 }
 
-const getRoverImage = (store , rover) => {
+const getRoverImageData = (store , rover) => {
     function handleError(err) {
         console.log(err);
     }
     console.log(rover);
-    const endPoint = `http://localhost:3000/roverimage/${rover.toLowerCase()}`;
+    const endPoint = `http://localhost:3000/roverimage/${rover}`;
     fetch(endPoint, {
         method: 'GET'
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
-            updateStore(store, { roverInfo: data })
+            console.log(data); 
+            const newStore = store.setIn(['roverInfo'], Immutable.fromJS(data))
+            updateStore(store, newStore);
+            //updateStore(store, { roverInfo: data })
     }).catch(handleError)
 }
