@@ -8,13 +8,6 @@ const cors = require("cors")
 const app = express()
 const port = 3000
 
-const { Map } = require('immutable');
-const { nextTick } = require('process')
-
-const rovers = Map({
-    
-});
-
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -22,19 +15,6 @@ app.use(bodyParser.json())
 app.use('/', express.static(path.join(__dirname, '../public')))
 
 const API_KEY = process.env.API_KEY;
-
-app.post('./info', async (req,res) => {
-    try {
-        res.send();
-    } catch (err) {
-        console.log('error:', err);
-    }
-})
-
-app.get('/', (req, res) => {
-    res.send('Hello World');
-})
-
 
 // Fetch Image from NASA
 app.get('/roverimage/:rover', async (req, res) => {
