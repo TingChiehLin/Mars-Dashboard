@@ -19,13 +19,20 @@ const updateIndex = (store, newState) => {
 }
 
 const render = async (root, state) => {
+    console.log(state);
     root.innerHTML = App(state)
 }
 
 // create content
 const App = (state) => {
-    console.log(state.get('rovers'));
-    let {user, rovers, navIndex, roverInfo} = state
+    //Performance issue
+    // let {user, rovers, navIndex, roverInfo} = state.toJS();
+    let user = state.get('user')
+    let rovers = state.get('rovers')
+    let navIndex = state.get('navIndex')
+    let roverInfo = state.get('roverInfo')
+    console.log(roverInfo);
+
     return `
         <div class="main-container">
             <header class="header" id="header">
@@ -45,6 +52,7 @@ const App = (state) => {
 //${roverInfo(rovers, navIndex)}
 // listening for load event because page should load before any JS is called
 window.addEventListener('load', () => {
+
     getRoverImage(store, store.get('rovers')[0]);
     // render(root, store);
 })
@@ -73,9 +81,8 @@ function changeIndex(element, index) {
             navItems[i].classList.remove('active');
         }
     }
-
-   getRoverImage(store, store.rovers[index]);
-   updateIndex(store, {navIndex: index});
+    updateIndex(store, {navIndex: index});
+    getRoverImage(store, store.rovers[index]);
 }
 
 const nav = (rovers) => {
@@ -113,6 +120,7 @@ const renderRoverInfo = (element, navIndex, roverInfo) => {
 }
 
 const getRoverData = (roverInfo, navIndex) => {
+    // console.log(roverInfo);
     return (
         `
         <img src="./assets/image/${roverInfo[navIndex] + ".jpg"}" alt="" class="intro-rover-image"/>

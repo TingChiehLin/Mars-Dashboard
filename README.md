@@ -16,8 +16,7 @@ People might be curious about Mars so I decided to make this app that enables pe
 ## Import NASA API
 
 * Create .env file in the root path
-
-Input your API Key in the .env file
+* Input your API Key in the .env file
 
 ```
 API_KEY=You NASA API Key
