@@ -35,7 +35,7 @@ http://localhost:3000/ - Enter your link on the broswer
 
 ## Result
 
-#### Home
+### Home
 
 ### Mars Information - 
 
