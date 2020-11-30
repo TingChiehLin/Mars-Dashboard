@@ -158,7 +158,7 @@ const getRoverImageData = (store , rover) => {
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data); 
+            console.log(data.photo_manifest); 
             const newStore = store.setIn(['roverInfo'], Immutable.fromJS(data))
             updateStore(store, newStore);
             //updateStore(store, { roverInfo: data })
