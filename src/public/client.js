@@ -80,12 +80,12 @@ function changeIndex(element, index) {
         }
     }
     updateIndex(store, {navIndex: index});
-    getRoverImageData(store, store.rovers[index]);
+    getRoverImageData(store, store.get('rovers')[index]);
 }
 
 const nav = (rovers) => {
     const navigation_tags = rovers.map((element,index) => {
-        const a = `<a id="${element}" class="nav-item ${index === store.navIndex ? "active" : ""}" onclick='changeIndex(${element},${index})'> ${element} </a>`
+        const a = `<a id="${element}" class="nav-item ${index === rovers[index] ? "active" : ""}" onclick='changeIndex(${element},${index})'> ${element} </a>`
         return a
     }).join(' ');
 
@@ -119,24 +119,25 @@ const renderRoverInfo = (element, navIndex, roverInfo, renderRoverData, renderRe
     `
 }
 
-const renderRoverData = (roverInfo, navIndex) => {
-    console.log(roverInfo);
+const renderRoverData = (state) => {
+    const roverData = state.photo_manifest;
     return (
         `
-        <img src="./assets/image/${roverInfo[navIndex] + ".jpg"}" alt="" class="intro-rover-image"/>
+        <img src="./assets/image/${roverData.name + ".jpg"}" alt="" class="intro-rover-image"/>
         <div class="intro-rover-container">
-            <div>Launch Date: ${roverInfo[0].rover.launch_date} </div>
-            <div>Landing Date: ${roverInfo[0].rover.landing_date}</div> 
-            <div>Status: ${roverInfo[0].rover.status}</div>
+            <div>Launch Date: ${roverData.launch_date} </div>
+            <div>Landing Date: ${roverData.landing_date}</div> 
+            <div>Status: ${roverData.status}</div>
         </div>
         `
     )
 }
 
 const renderRecentlyImage = (state) => {
-    
+    const roverData = state.photo_manifest;
+    console.log(roverData);
     let content = ``;
-    state.slice(0,2).map(element => {
+    roverData.photos.slice(0,2).map(element => {
         content += `<div>
                 <img class="renderImage" src=${element.img_src} alt="image"/>
                 <div class="introImage-text">Earth-Date: ${element.earth_date}</div>
@@ -150,17 +151,15 @@ const getRoverImageData = (store , rover) => {
     function handleError(err) {
         console.log(err);
     }
-    console.log(rover);
     const endPoint = `http://localhost:3000/roverimage/${rover}`;
     fetch(endPoint, {
         method: 'GET'
     })
         .then(res => res.json())
         .then(data => {
-            const newStore = store.setIn(['roverInfo'], Immutable.fromJS(data))
+            //const newStore = store.setIn(['roverInfo'], Immutable.fromJS(data))
+            const newStore = store.set("roverInfo", data);
             updateStore(store, newStore);
-            console.log(newStore); 
-            console.log(data.landing_date); 
             //updateStore(store, { roverInfo: data })
     }).catch(handleError)
 }
