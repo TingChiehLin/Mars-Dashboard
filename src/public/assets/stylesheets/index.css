@@ -137,23 +137,27 @@ main {
 @media (max-width: 768px) {
 
   .main-container {
-    grid-template-columns: minmax(150px, 25%) 75%; 
+    grid-template-columns: minmax(300px, 30%) 70%; 
   }
 
+  header {
+    padding:1rem 1rem;
+  }
   /* use mobile */
   header h2 {
-    font-size: 17px;
+    font-size: 13px;
+    text-align: center;
   }
   
   .tab-container nav {
-    font-size: 14px;
+    font-size: 9px;
   }
 
 }
 
 /* -------------------  DESKTOP  -------------------- */
 
-@media (max-width: 1224px) {
+@media (max-width: 1224px) and (min-width:960px) {
 
   .main-container {
     grid-template-columns: 20% 80%; 
