@@ -121,7 +121,6 @@ const renderRoverInfo = (element, navIndex, roverInfo, renderRoverData, renderRe
 
 const renderRoverData = (roverInfo, navIndex) => {
     console.log(roverInfo);
-    console.log(roverInfo.get('id'));
     return (
         `
         <img src="./assets/image/${roverInfo[navIndex] + ".jpg"}" alt="" class="intro-rover-image"/>
@@ -158,9 +157,10 @@ const getRoverImageData = (store , rover) => {
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data.photo_manifest); 
             const newStore = store.setIn(['roverInfo'], Immutable.fromJS(data))
             updateStore(store, newStore);
+            console.log(newStore); 
+            console.log(data.landing_date); 
             //updateStore(store, { roverInfo: data })
     }).catch(handleError)
 }
