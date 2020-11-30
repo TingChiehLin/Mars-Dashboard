@@ -20,6 +20,7 @@ const API_KEY = process.env.API_KEY;
 // Fetch Image from NASA
 app.get('/roverimage/:rover', async (req, res) => {
     const { rover } = req.params;
+    
     res.setHeader('Access-Control-Allow-Origin','*');
     res.setHeader('Access-Control-Allow-Method', 'GET, POST, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-header', 'Content-Type, Authorization');
