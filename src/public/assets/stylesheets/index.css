@@ -133,24 +133,12 @@ main {
   text-align: center;
 }
 
-/* -------------------  TABLET  --------------------- */
-@media (max-width: 768px) {
+/* -------------------  LARGE SCREENS  -------------- */
 
-  .main-container {
-    grid-template-columns: minmax(300px, 30%) 70%; 
-  }
-
-  header {
-    padding:1rem 1rem;
-  }
+@media (max-width: 1824px) {
   /* use mobile */
-  header h2 {
-    font-size: 13px;
-    text-align: center;
-  }
-  
-  .tab-container nav {
-    font-size: 9px;
+  .main-container {
+    grid-template-columns: 15% 85%; 
   }
 
 }
@@ -173,12 +161,26 @@ main {
   }
 }
 
-/* -------------------  LARGE SCREENS  -------------- */
 
-@media (max-width: 1824px) {
-  /* use mobile */
+/* -------------------  TABLET  --------------------- */
+@media (max-width: 768px) {
+
   .main-container {
-    grid-template-columns: 15% 85%; 
+    grid-template-columns: minmax(300px, 30%) 70%; 
+  }
+
+  header {
+    padding:1rem 1rem;
+  }
+  /* use mobile */
+  header h2 {
+    font-size: 11px;
+    text-align: left;
+    line-height: 1rem;
+  }
+  
+  .tab-container nav {
+    font-size: 9px;
   }
 
 }

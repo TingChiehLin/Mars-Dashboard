@@ -15,12 +15,27 @@ app.use(bodyParser.json())
 app.use('/', express.static(path.join(__dirname, '../public')))
 
 const API_KEY = process.env.API_KEY;
-//https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/latest_photos
 
-// Fetch Image from NASA
 app.get('/roverimage/:rover', async (req, res) => {
     const { rover } = req.params;
-    
+
+    res.setHeader('Access-Control-Allow-Origin','*');
+    res.setHeader('Access-Control-Allow-Method', 'GET, POST, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-header', 'Content-Type, Authorization');
+
+    try {
+        let data = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/${rover.toLowerCase}/latest_photos`)
+        .then(res => res.json())
+        res.send(data);        
+    } catch (err) {
+        console.log('error:', err);
+    }
+})
+
+// Fetch Image from NASA
+app.get('/roverinfo/:rover', async (req, res) => {
+    const { rover } = req.params;
+
     res.setHeader('Access-Control-Allow-Origin','*');
     res.setHeader('Access-Control-Allow-Method', 'GET, POST, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-header', 'Content-Type, Authorization');
