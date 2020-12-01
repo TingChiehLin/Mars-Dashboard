@@ -12,7 +12,6 @@ const root = document.getElementById('root')
 
 const updateStore = (store, newState) => {
     store = Object.assign(store, newState)
-    render(root, store)
 }
 
 const updateIndex = (store, newState) => {
@@ -191,6 +190,7 @@ const getRoverImageData = (state, rover) => {
             const newState = state.set('roverImage', data);
             console.log(data);
             updateStore(state, newState);
+            render(root, store);
     }).catch(handleError)
     
 }
