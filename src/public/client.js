@@ -80,6 +80,7 @@ function changeIndex(element, index) {
             navItems[i].classList.remove('active');
         }
     }
+
     updateIndex(store, {navIndex: index});
     getRoverInfoData(store, store.get('rovers')[index]);
     getRoverImageData(store, store.get('rovers')[index]);
@@ -168,6 +169,7 @@ const getRoverInfoData = (state, rover) => {
         .then(res => res.json())
         .then(data => {
             //const newStore = store.setIn(['roverInfo'], Immutable.fromJS(data))
+            console.log(data);
             const newStore = state.set("roverInfo", data);
             updateStore(state, newStore);
             //updateStore(store, { roverInfo: data })
@@ -180,15 +182,14 @@ const getRoverImageData = (state, rover) => {
     function handleError(err) {
         console.log(err);
     }
-
     const endPoint = `http://localhost:3000/roverimage/${rover}`;
     fetch(endPoint, {
         method: 'GET'
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
             const newState = state.set('roverImage', data);
+            console.log(data);
             updateStore(state, newState);
     }).catch(handleError)
     

@@ -18,13 +18,12 @@ const API_KEY = process.env.API_KEY;
 
 app.get('/roverimage/:rover', async (req, res) => {
     const { rover } = req.params;
-
+    
     res.setHeader('Access-Control-Allow-Origin','*');
     res.setHeader('Access-Control-Allow-Method', 'GET, POST, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-header', 'Content-Type, Authorization');
-
     try {
-        let data = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/${rover.toLowerCase}/latest_photos`)
+        let data = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/${rover.toLowerCase()}/latest_photos?api_key=${API_KEY}`)
         .then(res => res.json())
         res.send(data);        
     } catch (err) {
