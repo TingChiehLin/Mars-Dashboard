@@ -171,6 +171,7 @@ const getRoverInfoData = (state, rover) => {
             console.log(data);
             const newStore = state.set("roverInfo", data);
             updateStore(state, newStore);
+            render(root, store);
             //updateStore(store, { roverInfo: data })
     }).catch(handleError)
 }
@@ -190,7 +191,6 @@ const getRoverImageData = (state, rover) => {
             const newState = state.set('roverImage', data);
             console.log(data);
             updateStore(state, newState);
-            render(root, store);
     }).catch(handleError)
     
 }
