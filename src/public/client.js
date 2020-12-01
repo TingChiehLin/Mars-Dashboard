@@ -182,7 +182,7 @@ const getRoverImageData = (state, rover) => {
     function handleError(err) {
         console.log(err);
     }
-    const endPoint = `http://localhost:3000/roverimage/${rover}`;
+    const endPoint = `http://localhost:3000/roverimage/${rover.toLowerCase()}`;
     fetch(endPoint, {
         method: 'GET'
     })
