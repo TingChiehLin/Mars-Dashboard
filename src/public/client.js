@@ -174,6 +174,7 @@ const getRoverInfoData = (state, rover) => {
         .then(res => res.json())
         .then(data => {
             //const newStore = store.setIn(['roverInfo'], Immutable.fromJS(data))
+            JSON.stringify(data);
             const newStore = state.set("roverInfo", data);
             updateStore(state, newStore);
             render(root, store);
@@ -192,6 +193,7 @@ const getRoverImageData = (state, rover) => {
         .then(res => res.json())
         .then(data => {
             console.log(data);
+            JSON.stringify(data);
             const newState = state.set('roverImage', data);
             console.log(newState);
             updateStore(state, newState);
