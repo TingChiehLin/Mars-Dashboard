@@ -52,7 +52,6 @@ const App = (state, renderRoverData, renderRecentlyImage) => {
 window.addEventListener('load', () => {
     getRoverInfoData(store, store.get('rovers')[0]);
     getRoverImageData(store, store.get('rovers')[0]);
-    // render(root, store);
 })
 
 // ------------------------------------------------------  COMPONENTS
@@ -105,7 +104,6 @@ const footer = () => {
 }
 
 const renderRoverInfo = (roverInfo, roverImage, renderRoverData, renderRecentlyImage) => {
-    console.log(roverInfo);
     const roverHTML = renderRoverData(roverInfo);
     const roverimageHTML = renderRecentlyImage(roverImage);
     return `
@@ -132,7 +130,11 @@ const renderRoverData = (state) => {
             <div class="intro-rover-container">
                 <div>Launch Date: ${roverData.launch_date} </div>
                 <div>Landing Date: ${roverData.landing_date}</div> 
-                <div>Status: ${roverData.status}</div>
+                <div>Status: 
+                    <span class="status-active">
+                        ${(roverData.status).toUpperCase()}
+                    </span>
+                </div>
             </div>
         </div>
         `
@@ -140,15 +142,19 @@ const renderRoverData = (state) => {
 }
 
 const renderRecentlyImage = (state) => {
-    const roverData = state.photo_manifest;
+    const roverData = state.latest_photos;
+    console.log(roverData);
     let content = ``;
-    roverData.photos.slice(0,2).map(element => {
-        content += `<div>
-                <img class="renderImage" src=${element.img_src} alt="image"/>
-                <div class="introImage-text">Earth-Date: ${element.earth_date}</div>
-            </div>
-        `
-    })
+    if (roverData == undefined) {
+        return
+    }
+        roverData.slice(0,4).map(element => {
+            content += `<div>
+                    <img class="renderImage" src=${element.img_src} alt="image"/>
+                    <div class="introImage-text">Earth-Date: ${element.earth_date}</div>
+                </div>
+            `
+        })
     return content;
 }
 
@@ -156,7 +162,7 @@ const renderRecentlyImage = (state) => {
 const getRoverInfoData = (state, rover) => {
     // const stateObj = state.toJS();
     // let { rovers, navIndex} = stateObj;
-    // const rover = rovers[navIndex];
+
     function handleError(err) {
         console.log(err);
     }
@@ -168,28 +174,26 @@ const getRoverInfoData = (state, rover) => {
         .then(res => res.json())
         .then(data => {
             //const newStore = store.setIn(['roverInfo'], Immutable.fromJS(data))
-            console.log(data);
             const newStore = state.set("roverInfo", data);
             updateStore(state, newStore);
             render(root, store);
-            //updateStore(store, { roverInfo: data })
     }).catch(handleError)
 }
 
 //get rover image
-
 const getRoverImageData = (state, rover) => {
     function handleError(err) {
         console.log(err);
     }
-    const endPoint = `http://localhost:3000/roverimage/${rover.toLowerCase()}`;
+    const endPoint = `http://localhost:3000/roverimage/${rover}`;
     fetch(endPoint, {
         method: 'GET'
     })
         .then(res => res.json())
         .then(data => {
-            const newState = state.set('roverImage', data);
             console.log(data);
+            const newState = state.set('roverImage', data);
+            console.log(newState);
             updateStore(state, newState);
     }).catch(handleError)
     

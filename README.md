@@ -2,11 +2,12 @@
 
 People might be curious about Mars so I decided to make this app that enables people to observe Mars' environment.
 
-## Technical Used
+## Technical Tool Used
 
 * JavaScript (ES6)
 * HTML5
 * CSS
+* Responsive Design
 * API Call
 
 ## API 
@@ -34,11 +35,11 @@ http://localhost:3000/ - Enter your link on the broswer
 
 ## Result
 
-### Home
+### Mars Information - Curiosity
 
-### Mars Information - 
+### Mars Information - Opportunity
 
-### Mars Information - 
+### Mars Information - Spirit
 
 ## Link 
 [Mars Dashboard App](https://dinosaurs.vercel.app/)

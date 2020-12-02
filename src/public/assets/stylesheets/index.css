@@ -16,6 +16,7 @@ header {
   color: white;
   background-color: #5A2116;
   padding: 3rem 2rem;
+  width:200px;
 }
 
 header h2 {
@@ -71,8 +72,7 @@ main {
 .information-container {
   margin-top: 3rem;
   background-color: #F7F7F7;
-  width: 100%;
-  height: 90%;
+  width: auto;
 }
 
 .center {
@@ -88,7 +88,7 @@ main {
 }
 
 .intro-rover-image {
-  width: 800px;
+  width: 700px;
   height: 500px;
   border-radius: 5%;
   background-color: brown;
@@ -96,12 +96,14 @@ main {
 
 .intro-rover-container {
   font-size: 17px;
-  width: 100%;
-  height: 100%;
 }
 
 .intro-rover-container > * {
   margin-bottom:1rem;
+}
+
+.status-active {
+  color:rgb(22, 180, 22);
 }
 
 .recentPhoto-container {
@@ -118,8 +120,8 @@ main {
 }
 
 .renderImage {
-  width: 500px;
-  height: 500px;
+  width: 250px;
+  height: 250px;
   border-radius: 5%;
   border: none;
   outline: none;
@@ -133,24 +135,9 @@ main {
   text-align: center;
 }
 
-/* -------------------  LARGE SCREENS  -------------- */
-
-@media (max-width: 1824px) {
-  /* use mobile */
-  .main-container {
-    grid-template-columns: 15% 85%; 
-  }
-
-}
-
 /* -------------------  DESKTOP  -------------------- */
 
-@media (max-width: 1224px) and (min-width:960px) {
-
-  .main-container {
-    grid-template-columns: 20% 80%; 
-  }
-
+@media (max-width: 1440px) and (min-width:960px) {
   /* use mobile */
   header h2 {
     font-size: 20px;
@@ -159,6 +146,24 @@ main {
   .tab-container nav {
     font-size: 17px;
   }
+
+  .rover-container {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap:5rem
+  }
+
+  .recentPhoto-container {
+    flex-wrap: wrap;
+    padding: 3rem;
+    justify-content: center;
+  }
+
+  .intro-rover-image {
+    width: 600px;
+    height: 400px;
+  }
 }
 
 
@@ -166,11 +171,35 @@ main {
 @media (max-width: 768px) {
 
   .main-container {
-    grid-template-columns: minmax(300px, 30%) 70%; 
+    grid-template-columns: 20% 80%; 
+  }
+
+  .rover-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap:2rem
+  }
+
+  .intro-rover-image {
+    width: 180px;
+    height: 130px;
+  }
+
+  .intro-rover-container {
+    font-size: 13px;
+  }
+
+  .center {
+    font-size: 17px;
+  }
+
+  .title {
+    font-size: 13px;
   }
 
   header {
     padding:1rem 1rem;
+    width: 100px;
   }
   /* use mobile */
   header h2 {
@@ -183,4 +212,26 @@ main {
     font-size: 9px;
   }
 
+  .information-container {
+    width: auto;
+  }
+
+  .recentPhoto-container {
+    flex-wrap: wrap;
+    padding: 1rem;
+    justify-content: center;
+  }
+
+  .renderImage {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .introImage-text {
+    font-size: 9px;
+  }
+
+  .foot-container {
+    font-size: 9px;
+  }
 }
