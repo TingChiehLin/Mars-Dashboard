@@ -193,7 +193,7 @@ const getRoverImageData = (state, rover) => {
         .then(res => res.json())
         .then(data => {
             console.log(data);
-            JSON.stringify(data);
+            JSON.parse(data);
             const newState = state.set('roverImage', data);
             console.log(newState);
             updateStore(state, newState);

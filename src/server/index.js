@@ -25,6 +25,7 @@ app.get('/roverimage/:rover', async (req, res) => {
     try {
         let data = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/${rover.toLowerCase()}/latest_photos?api_key=${API_KEY}`)
         .then(res => res.json())
+        JSON.stringify(data);
         res.send(data);        
     } catch (err) {
         console.log('error:', err);
