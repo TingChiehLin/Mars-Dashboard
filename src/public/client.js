@@ -1,4 +1,4 @@
-const store = Immutable.Map({
+let store = Immutable.Map({
     user: { name: "NASA MARS EXPLORATION"},
     apod: '',
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
@@ -10,12 +10,14 @@ const store = Immutable.Map({
 // add our markup to the page
 const root = document.getElementById('root')
 
-const updateStore = (store, newState) => {
-    store = Object.assign(store, newState)
+const updateStore = (state, newState) => {
+    store = Object.assign(state, newState)
+    //store = state.merge(newState)
 }
 
-const updateIndex = (store, newState) => {
-    store = Object.assign(store, newState)
+const updateIndex = (state, newState) => {
+    // store = Object.assign(store, newState)
+    store = state.merge(newState)
 }
 
 const render = async (root, state) => {
@@ -71,16 +73,17 @@ const Greeting = (name) => {
 
 function changeIndex(element, index) {
     
-    // const navItems = document.getElementsByClassName("nav-item");
-    // for(let i = 0; i < navItems.length; i++) {
-    //     if(navItems[i] === element) {
-    //         navItems[i].classList.add('active');
-    //     } else {
-    //         navItems[i].classList.remove('active');
-    //     }
-    // }
+    const navItems = document.getElementsByClassName("nav-item");
+    for(let i = 0; i < navItems.length; i++) {
+        if(navItems[i] === element) {
+            navItems[i].classList.add('active');
+            updateIndex(store, {navIndex: i})
+            index = i;
+        } else {
+            navItems[i].classList.remove('active');
+        }
+    }
 
-    updateIndex(store, {navIndex: index});
     getRoverInfoData(store, store.get('rovers')[index]);
     getRoverImageData(store, store.get('rovers')[index]);
 }
@@ -145,8 +148,11 @@ const renderRecentlyImage = (state) => {
     const roverData = state.latest_photos;
     let content = ``;
     if (roverData == undefined) {
-        return
-    }
+        content += `<div>
+            <div class="introImage-text">There is no any news</div>
+        </div>
+        `
+    } else {
         roverData.slice(0,4).map(element => {
             content += `<div>
                     <img class="renderImage" src=${element.img_src} alt="image"/>
@@ -154,6 +160,7 @@ const renderRecentlyImage = (state) => {
                 </div>
             `
         })
+    }
     return content;
 }
 
