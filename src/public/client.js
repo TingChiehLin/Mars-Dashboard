@@ -70,14 +70,15 @@ const Greeting = (name) => {
 }
 
 function changeIndex(element, index) {
-    const navItems = document.getElementsByClassName("nav-item");
-    for(let i = 0; i < navItems.length; i++) {
-        if(navItems[i] === element) {
-            navItems[i].classList.add('active');
-        } else {
-            navItems[i].classList.remove('active');
-        }
-    }
+    
+    // const navItems = document.getElementsByClassName("nav-item");
+    // for(let i = 0; i < navItems.length; i++) {
+    //     if(navItems[i] === element) {
+    //         navItems[i].classList.add('active');
+    //     } else {
+    //         navItems[i].classList.remove('active');
+    //     }
+    // }
 
     updateIndex(store, {navIndex: index});
     getRoverInfoData(store, store.get('rovers')[index]);
@@ -86,7 +87,7 @@ function changeIndex(element, index) {
 
 const nav = (rovers) => {
     const navigation_tags = rovers.map((element,index) => {
-        const a = `<a id="${element}" class="nav-item ${index === rovers[index] ? "active" : ""}" onclick='changeIndex(${element},${index})'> ${element} </a>`
+        const a = `<a id="${element}" class="nav-item ${index === store.get("navIndex") ? "active" : ""}" onclick='changeIndex(${element},${index})'> ${element} </a>`
         return a
     }).join(' ');
 
