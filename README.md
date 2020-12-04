@@ -42,7 +42,7 @@ http://localhost:3000/ - Enter your link on the broswer
 ### Mars Information - Spirit
 
 ## Link 
-[Mars Dashboard App](https://dinosaurs.vercel.app/)
+[Mars Dashboard App](https://mars-dashboard.vercel.app/)
 
 ## License
 
