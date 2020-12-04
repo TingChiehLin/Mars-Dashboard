@@ -1,4 +1,4 @@
-let store = Immutable.Map({
+const store = Immutable.Map({
     user: { name: "NASA MARS EXPLORATION"},
     apod: '',
     rovers: ['Curiosity', 'Opportunity', 'Spirit'],
@@ -121,7 +121,6 @@ const renderRoverInfo = (roverInfo, roverImage, renderRoverData, renderRecentlyI
 
 const renderRoverData = (state) => {
     const roverData = state.photo_manifest;
-    console.log(roverData);
     return (
         `
         <h1 class="title">Rover Name: ${roverData.name}</h1>
@@ -143,7 +142,6 @@ const renderRoverData = (state) => {
 
 const renderRecentlyImage = (state) => {
     const roverData = state.latest_photos;
-    console.log(roverData);
     let content = ``;
     if (roverData == undefined) {
         return
@@ -160,8 +158,6 @@ const renderRecentlyImage = (state) => {
 
 //get rover info
 const getRoverInfoData = (state, rover) => {
-    // const stateObj = state.toJS();
-    // let { rovers, navIndex} = stateObj;
 
     function handleError(err) {
         console.log(err);
@@ -192,10 +188,8 @@ const getRoverImageData = (state, rover) => {
     })
         .then(res => res.json())
         .then(data => {
-            console.log(data);
-            JSON.parse(data);
+            //JSON.parse(data);
             const newState = state.set('roverImage', data);
-            console.log(newState);
             updateStore(state, newState);
     }).catch(handleError)
     
