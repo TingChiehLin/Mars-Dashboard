@@ -36,10 +36,13 @@ http://localhost:3000/ - Enter your link on the broswer
 ## Result
 
 ### Mars Information - Curiosity
+<img width="1759" alt="Curiosity" src="https://user-images.githubusercontent.com/17351134/101269944-26456100-37c8-11eb-818d-4b3eb591dc29.png">
 
 ### Mars Information - Opportunity
+<img width="1756" alt="Opportunity" src="https://user-images.githubusercontent.com/17351134/101269946-28a7bb00-37c8-11eb-93e5-5bdc1f539584.png">
 
 ### Mars Information - Spirit
+<img width="1754" alt="Spirit" src="https://user-images.githubusercontent.com/17351134/101269947-29405180-37c8-11eb-87be-18b6726e09d3.png">
 
 ## Link 
 [Mars Dashboard App](https://mars-dashboard.vercel.app/)
