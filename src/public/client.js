@@ -12,11 +12,9 @@ const root = document.getElementById('root')
 
 const updateStore = (state, newState) => {
     store = Object.assign(state, newState)
-    //store = state.merge(newState)
 }
 
 const updateIndex = (state, newState) => {
-    // store = Object.assign(store, newState)
     store = state.merge(newState)
 }
 
@@ -106,7 +104,6 @@ const footer = () => {
         </footer>
     `
 }
-
 const renderRoverInfo = (roverInfo, roverImage, renderRoverData, renderRecentlyImage) => {
     const roverHTML = renderRoverData(roverInfo);
     const roverimageHTML = renderRecentlyImage(roverImage);
@@ -179,12 +176,10 @@ const getRoverInfoData = (state, rover) => {
         .then(data => {
             //const newStore = store.setIn(['roverInfo'], Immutable.fromJS(data))
             JSON.stringify(data);
-            //const newStore = state.set("roverInfo", data);
-            console.dir({"roverInfo": data})
-            console.log(data);
-            //.photo_manifest
-            updateStore(state, {'roverInfo': data.photo_manifest});
-            // updateStore(state, newStore);
+            const newStore = state.set("roverInfo", data);
+            // console.dir({"roverInfo": data})
+            //updateStore(state, {'roverInfo': data.photo_manifest});
+            updateStore(state, newStore);
             render(root, store);
     }).catch(handleError)
 }
@@ -201,11 +196,9 @@ const getRoverImageData = (state, rover) => {
         .then(res => res.json())
         .then(data => {
             //JSON.parse(data);
-            // const newState = state.set('roverImage', data);
-            // updateStore(state, newState);
-            console.log({"roverImage": data})
-            //latest_photos
-            updateStore(state, {'roverImage': data.latest_photos});
+            const newState = state.set('roverImage', data);
+            updateStore(state, newState);
+            //updateStore(state, {'roverImage': data.latest_photos});
     }).catch(handleError)
     
 }
